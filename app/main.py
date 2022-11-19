@@ -6,6 +6,7 @@ from flask import request
 from pycoin.blockchain import Blockchain
 from pycoin.blockchain import Transaction
 from pycoin.crypto import model
+from pycoin.wallet import Wallet
 
 
 app = Flask(__name__)
@@ -20,7 +21,8 @@ def blockchain():
 @app.route("/mine")
 def mine():
     miner_address = request.args.get('miner_address', None)
-    b.mine_block(miner_address)
+    if not (b.mine_block(miner_address)):
+        return "Invalid params"
     block = b.blocks[-1]
     block_model = json.loads(json.dumps(block, indent=4, cls=model))
     return jsonify(block_model)
@@ -37,8 +39,18 @@ def tx():
     if not (tx.sign(priv_key)):
         return "Bad Request!"
 
-    b.validate_tx(tx)
-    b.pending_txs.append(tx)
+    if not (b.validate_tx(tx)):
+        return "Invalid transcation"
+    
 
     tx_model = json.loads(json.dumps(tx, indent=4, cls=model))
     return tx_model
+
+@app.route("/wallet")
+def wallet():
+    addr = request.args.get('addr', None)
+    wallet = Wallet(addr)
+    wallet.get_wallet_bal(b.blocks, b.pending_txs)
+    wallet.get_txs(b.blocks, b.pending_txs)
+    wallet_model = json.loads(json.dumps(wallet, indent=4, cls=model))
+    return wallet_model

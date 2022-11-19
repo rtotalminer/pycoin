@@ -3,6 +3,8 @@ from pycoin.crypto import hash_contents
 import json
 
 def root_hash(data):
+    if data == []:
+        return []
     hash_map = []
     for i in data:
         i_model = json.loads(json.dumps(i, cls=model))
@@ -22,7 +24,6 @@ def root_hash(data):
             branch.append(leaf)
         hash_map = branch
         count = len(hash_map)
-
     return hash_map[0]
 
 

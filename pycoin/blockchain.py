@@ -2,6 +2,7 @@ from pycoin.block import Block
 from pycoin.transcation import Transaction
 from pycoin.crypto import hash_contents
 from pycoin.merkle import root_hash
+from pycoin.wallet import Wallet
 
 class Blockchain:
     def __init__(self):
@@ -13,9 +14,17 @@ class Blockchain:
 
     def get_difficulty(self):
         return 1
-    
+
     def validate_tx(self, tx):
-        pass
+        wallet = Wallet(tx.from_addr)
+        bal = wallet.get_wallet_bal(self.blocks, self.pending_txs)
+        print(bal)
+        if (int(tx.amount) > bal):
+            return False
+
+        self.pending_txs.append(tx)
+        return True
+
 
     def get_current_supply(self):
         current_supply = 0
@@ -30,6 +39,9 @@ class Blockchain:
         difficulty = self.get_difficulty()
         amount = 10**(1/difficulty)
 
+        if not (miner_address):
+            return False
+
         if (len(self.blocks) == 0):
             prev_hash = "0x00"
         else: 
@@ -40,11 +52,11 @@ class Blockchain:
         else:
             txs = []
 
+        coinbase = Transaction("0x00", miner_address, int(amount), ["coinbase"])
+        txs.append(coinbase)
         tx_root = root_hash(txs)
-        block = Block(txs, len(self.blocks), prev_hash, miner_address, tx_root)
 
-        coinbase = Transaction("0x00", miner_address, amount, ["coinbase"])
-        block.txs.append(coinbase)
+        block = Block(txs, len(self.blocks), prev_hash, miner_address, tx_root)
 
         while not (hash_contents(block).startswith('0' * difficulty)):
             block.seed += 1
