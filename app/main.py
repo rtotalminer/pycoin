@@ -8,10 +8,21 @@ from pycoin.blockchain import Transaction
 from pycoin.crypto import model
 from pycoin.wallet import Wallet
 
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+cors = CORS(app)
 
 b = Blockchain()
+
+@app.get("/")
+def main():
+    return {"version": 1.0}
+
+@app.get("/docs")
+def docs():
+    return render_template("index.html")
 
 @app.get("/blockchain")
 def blockchain():
