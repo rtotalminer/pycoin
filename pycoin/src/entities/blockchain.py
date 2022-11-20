@@ -1,8 +1,9 @@
 from pycoin.block import Block
 from pycoin.transcation import Transaction
 from pycoin.crypto import hash_contents
-from pycoin.merkle import root_hash
+from pycoin.merkle import root_hash, hash_map
 from pycoin.wallet import Wallet
+
 
 class Blockchain:
     def __init__(self):
@@ -24,6 +25,11 @@ class Blockchain:
 
         self.pending_txs.append(tx)
         return True
+
+    def verify_blocks():
+        pass
+        # verify each block prev_tx matches
+        # and seed matches
 
 
     def get_current_supply(self):
@@ -52,7 +58,8 @@ class Blockchain:
         else:
             txs = []
 
-        coinbase = Transaction("0x00", miner_address, int(amount), ["coinbase"])
+        coinbase = Transaction("0x00", miner_address, int(amount), ["coinbase"], self.blocks, self.pending_txs)
+
         txs.append(coinbase)
         tx_root = root_hash(txs)
 

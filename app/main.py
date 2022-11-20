@@ -46,7 +46,7 @@ def tx():
     data = request.args.get('data', None)
     priv_key = request.args.get('priv_key', None)
 
-    tx = Transaction(from_addr, to_addr, amount, data)
+    tx = Transaction(from_addr, to_addr, amount, data, b.blocks, b.pending_txs)
     if not (tx.sign(priv_key)):
         return "Bad Request!"
 
