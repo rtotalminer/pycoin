@@ -4,8 +4,18 @@ var blocks = {};
 var curr_supply = 0;
 var init_supply = 0;
 
-
-
+window.onload = function() { 
+    $("#mine").on("click", function() { 
+        $.ajax({ 
+            type:"GET", 
+            url:"http://127.0.0.1:5000/mine?miner_address=0x00", 
+            success: function(data){ 
+                console.log(data)
+            },
+            cache: false
+        }); 
+    });
+}
 
 $(document).ready( function () {
 
@@ -18,7 +28,7 @@ $(document).ready( function () {
             dataSet.push(result)
             console.log(result)
         }
-        //console.log(dataSet);
+        
         $('#table1').DataTable({
             data: dataSet,
             columns: [

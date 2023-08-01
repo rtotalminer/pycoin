@@ -3,8 +3,8 @@ from flask import render_template
 import json
 from flask import jsonify
 from flask import request
-from pycoin.blockchain import Blockchain
-from pycoin.blockchain import Transaction
+
+from pycoin.blockchain import Blockchain, Transaction
 from pycoin.crypto import model
 from pycoin.wallet import Wallet
 
@@ -53,7 +53,6 @@ def tx():
     if not (b.validate_tx(tx)):
         return "Invalid transcation"
     
-
     tx_model = json.loads(json.dumps(tx, indent=4, cls=model))
     return tx_model
 
