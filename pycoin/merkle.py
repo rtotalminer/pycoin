@@ -1,5 +1,5 @@
-from pycoin.crypto import model
-from pycoin.crypto import hash_contents
+from .crypto import model
+from .crypto import hash_contents
 import json
 
 def root_hash(data):

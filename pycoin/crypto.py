@@ -1,6 +1,6 @@
 import hashlib, json
 from json import JSONEncoder
-from pycoin.transcation import Transaction
+from .transcation import Transaction
 
 
 # subclass JSONEncoder

@@ -13,8 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Blockchain', 'Wallet', 'About'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Blockchain', 'Wallet', 'Mine', 'About'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

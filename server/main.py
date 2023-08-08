@@ -4,9 +4,9 @@ import json
 from flask import jsonify
 from flask import request
 
-from pycoin.blockchain import Blockchain, Transaction
-from pycoin.crypto import model
-from pycoin.wallet import Wallet
+from ..pycoin.blockchain import Blockchain, Transaction
+from ..pycoin.crypto import model
+from ..pycoin.wallet import Wallet
 
 from flask_cors import CORS, cross_origin
 
@@ -20,9 +20,9 @@ b = Blockchain()
 def main():
     return {"version": 1.0}
 
-@app.get("/docs")
-def docs():
-    return render_template("index.html")
+# @app.get("/docs")
+# def docs():
+#     return render_template("index.html")
 
 @app.get("/blockchain")
 def blockchain():

@@ -1,8 +1,8 @@
-from pycoin.block import Block
-from pycoin.transcation import Transaction
-from pycoin.crypto import hash_contents
-from pycoin.merkle import root_hash
-from pycoin.wallet import Wallet
+from .block import Block
+from .transcation import Transaction
+from .crypto import hash_contents
+from .merkle import root_hash
+from .wallet import Wallet
 
 class Blockchain:
     def __init__(self):

@@ -1,4 +1,6 @@
-import * as React from 'react';
+
+import React, { useState, useEffect } from 'react';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -20,6 +23,19 @@ const rows = [
 ];
 
 export default function LatestBlocks() {
+
+  const [latestBlocks, setLatestBlocks] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/blockchain')
+       .then((response) => response.json())
+       .then((data) => {
+          console.log(data.blocks);
+       })
+       .catch((err) => {
+       });
+ }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
